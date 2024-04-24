@@ -42,7 +42,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true #${{ github.ref_type != 'pull_request' }}
-          tags: ${{ env.REGISTRY }} ${{ env.IMAGE_NAME }}
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
             PORT=${{ secrets.PORT }}
