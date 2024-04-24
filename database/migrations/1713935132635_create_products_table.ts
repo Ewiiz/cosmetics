@@ -11,7 +11,7 @@ export default class extends BaseSchema {
       table.text('description').notNullable()
       table.string('url_image').notNullable()
       table.string('brand').notNullable()
-      table.integer('price').notNullable()
+      table.float('price').notNullable()
       table.integer('quantity').notNullable()
 
       table.timestamp('created_at')
