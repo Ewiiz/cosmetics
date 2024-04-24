@@ -16,5 +16,6 @@ router.get('/', async () => {
   }
 })
 
-router.get('/products', [ProductsController, 'getProducts'])
-router.get('/products/:id', [ProductsController, 'getProduct'])
+router.get('accueil', [ProductsController, 'get3Products'])
+router.get('products', [ProductsController, 'getProducts'])
+router.get('products/:id', [ProductsController, 'getProduct'])
