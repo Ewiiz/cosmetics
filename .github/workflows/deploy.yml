@@ -33,5 +33,5 @@ jobs:
           passphrase: ${{ secrets.PASSPHRASE }}
           script: |
             cd /srv/cosmetics/api-cosmetics/
-            docker pull ghcr.io/ewiiz/api-vahyna:latest
+            docker pull ghcr.io/ewiiz/api-cosmetics:latest
             docker compose up -d --no-deps $SERVICES
