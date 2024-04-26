@@ -17,8 +17,8 @@ export default class CategoriesController {
       .where('id', id)
       .select('id', 'category_name')
 
-    productInCategories.forEach((category) => {
-      category.products.forEach((product) => {
+    productInCategories.map((category) => {
+      category.products.map((product) => {
         product.urlImage = product.getImageUrl()
       })
     })
