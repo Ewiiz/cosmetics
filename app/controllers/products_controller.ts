@@ -1,6 +1,5 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import db from '@adonisjs/lucid/services/db'
-import app from '@adonisjs/core/services/app'
 
 export default class ProductsController {
   async get3Products() {
@@ -35,13 +34,6 @@ export default class ProductsController {
       ...product,
       url_image: this.getImageUrl(product.url_image),
     }))
-  }
-
-  async getImagesForProducts({ params, response }: HttpContext) {
-    let basePath: string = 'uploads'
-
-    const imagePath: string = app.makePath(basePath, params.filename)
-    return response.download(imagePath)
   }
 
   private getImageUrl(imageFilename: string): string {
