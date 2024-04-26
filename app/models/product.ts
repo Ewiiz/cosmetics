@@ -2,7 +2,6 @@ import { DateTime } from 'luxon'
 import type { BelongsTo } from '@adonisjs/lucid/types/relations'
 import { BaseModel, belongsTo, column } from '@adonisjs/lucid/orm'
 import Category from '#models/category'
-import Cart from '#models/cart'
 
 export default class Product extends BaseModel {
   @column({ isPrimary: true })

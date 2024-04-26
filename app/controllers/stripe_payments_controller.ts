@@ -15,6 +15,12 @@ export default class StripePaymentsController {
 
     const cart = await Cart.query().preload('product')
 
+    if (cart.length === 0) {
+      return response.badRequest({
+        message: 'Le panier est vide. Vous ne pouvez pas procéder au paiement.',
+      })
+    }
+
     const lineItems = cart.map((cartItem) => {
       return {
         quantity: cartItem.quantity,
@@ -31,19 +37,39 @@ export default class StripePaymentsController {
     const session = await stripe.checkout.sessions.create({
       line_items: lineItems,
       mode: 'payment',
-      success_url: `${YOUR_DOMAIN}/success`,
-      cancel_url: `${YOUR_DOMAIN}/fail`,
+      invoice_creation: {
+        enabled: true,
+        invoice_data: {
+          description: 'Voici ma facture.',
+        },
+      },
+      success_url: `${YOUR_DOMAIN}/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${YOUR_DOMAIN}/cancel`,
     })
     console.log(session.url)
     response.redirect(session.url!)
   }
 
-  successPayment({}: HttpContext) {
-    console.log('success')
+  async successPayment({ response, request }: HttpContext) {
+    const session = await stripe.checkout.sessions.retrieve(request.qs().session_id)
+
+    if (session.payment_status === 'paid') {
+      await Cart.query().delete()
+
+      return response.redirect(`${env.get('FRONT_URL')}/success`)
+    } else {
+      return response.abort({ message: "Le paiement n'a pas été effectué." })
+    }
+    // console.log({
+    //   1: session.amount_total,
+    //   2: session.currency,
+    //   3: session.payment_status,
+    //   4: session.customer_details,
+    // })
   }
 
-  cancelPayment({}: HttpContext) {
-    console.log('cancel')
+  cancelPayment({ response }: HttpContext) {
+    return response.redirect(`${env.get('FRONT_URL')}/fail`)
   }
 }
 
