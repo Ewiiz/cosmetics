@@ -8,6 +8,7 @@
 */
 
 import router from '@adonisjs/core/services/router'
+const StripePaymentsController = () => import('#controllers/stripe_payments_controller')
 const CartsController = () => import('#controllers/carts_controller')
 const ProductsController = () => import('#controllers/products_controller')
 
@@ -25,3 +26,7 @@ router.get('cart', [CartsController, 'index'])
 router.post('cart', [CartsController, 'store'])
 router.patch('cart', [CartsController, 'update'])
 router.delete('cart/:id', [CartsController, 'destroy'])
+
+router.post('create-checkout-session', [StripePaymentsController, 'startPayment'])
+router.get('success', [StripePaymentsController, 'successPayment'])
+router.get('cancel', [StripePaymentsController, 'cancelPayment'])

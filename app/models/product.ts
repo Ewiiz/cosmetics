@@ -2,6 +2,7 @@ import { DateTime } from 'luxon'
 import type { HasMany } from '@adonisjs/lucid/types/relations'
 import { BaseModel, column, hasMany } from '@adonisjs/lucid/orm'
 import Category from '#models/category'
+import Cart from '#models/cart'
 
 export default class Product extends BaseModel {
   @column({ isPrimary: true })
@@ -36,4 +37,7 @@ export default class Product extends BaseModel {
 
   @hasMany(() => Category)
   declare category: HasMany<typeof Category>
+
+  @hasMany(() => Cart)
+  declare carts: HasMany<typeof Cart>
 }
