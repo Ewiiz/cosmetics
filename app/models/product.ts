@@ -35,9 +35,11 @@ export default class Product extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime
 
-  @hasMany(() => Category)
-  declare category: HasMany<typeof Category>
+  @belongsTo(() => Category)
+  declare category: BelongsTo<typeof Category>
 
-  @hasMany(() => Cart)
-  declare carts: HasMany<typeof Cart>
+  getImageUrl(): string {
+    const baseUrl = process.env.APP_BASE_URL || 'http://localhost:3333'
+    return `${baseUrl}/images/${this.urlImage}`
+  }
 }

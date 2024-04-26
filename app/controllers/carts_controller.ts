@@ -13,7 +13,7 @@ export default class CartsController {
       productId: cartItem.product.id,
       title: cartItem.product.title,
       price: cartItem.product.price,
-      imageUrl: cartItem.product.urlImage,
+      imageUrl: cartItem.product.getImageUrl(),
       quantity: cartItem.quantity,
     }))
     // Retourner le tableau des informations sur les produits
