@@ -17,6 +17,12 @@ export default class CategoriesController {
       .where('id', id)
       .select('id', 'category_name')
 
+    productInCategories.forEach((category) => {
+      category.products.forEach((product) => {
+        product.urlImage = product.getImageUrl()
+      })
+    })
+
     if (productInCategories.length === 0)
       return response.notFound({ message: "Cette catégorie n'existe pas." })
 

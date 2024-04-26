@@ -36,4 +36,9 @@ export default class Product extends BaseModel {
 
   @belongsTo(() => Category)
   declare category: BelongsTo<typeof Category>
+
+  getImageUrl(): string {
+    const baseUrl = process.env.APP_BASE_URL || 'http://localhost:3333'
+    return `${baseUrl}/images/${this.urlImage}`
+  }
 }
