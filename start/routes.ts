@@ -22,6 +22,8 @@ router.get('accueil', [ProductsController, 'get3Products'])
 router.get('products', [ProductsController, 'getProducts'])
 router.get('products/:id', [ProductsController, 'getProduct'])
 
+router.get('images/:filename', [ProductsController, 'getImagesForProducts'])
+
 router.get('categories', [CategoriesController, 'getCategories'])
 router.get('categories/:id', [CategoriesController, 'getProductInCategories'])
 
