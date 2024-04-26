@@ -10,7 +10,12 @@ export default class CategoriesController {
   async getProductInCategories({ params, response }: HttpContext) {
     const { id } = params
 
-    const productInCategories = await Category.query().preload('products').where('id', id)
+    const productInCategories = await Category.query()
+      .preload('products', (query) => {
+        query.select('id', 'title', 'price', 'brand', 'url_image')
+      })
+      .where('id', id)
+      .select('id', 'category_name')
 
     if (productInCategories.length === 0)
       return response.notFound({ message: "Cette catégorie n'existe pas." })
