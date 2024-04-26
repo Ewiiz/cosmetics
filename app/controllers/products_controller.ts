@@ -38,7 +38,7 @@ export default class ProductsController {
   }
 
   async getImagesForProducts({ params, response }: HttpContext) {
-    let basePath: string = 'images-products'
+    let basePath: string = 'uploads'
 
     const imagePath: string = app.makePath(basePath, params.filename)
     console.log(imagePath)
