@@ -55,4 +55,5 @@ jobs:
             DB_DATABASE=${{ secrets.DB_DATABASE }}
             SESSION_DRIVER=${{ secrets.SESSION_DRIVER }}
             APP_BASE_URL=${{ secrets.APP_BASE_URL }}
+            STRIPE_SECRET=${{ secrets.STRIPE_SECRET }}
             FRONT_URL=${{ secrets.APP_BASE_URL }}
