@@ -41,6 +41,7 @@ export default class ProductsController {
     let basePath: string = 'images-products'
 
     const imagePath: string = app.makePath(basePath, params.filename)
+    console.log(imagePath)
     return response.download(imagePath)
   }
 
