@@ -4,7 +4,6 @@ import { HttpContext } from '@adonisjs/core/http'
 
 import Stripe from 'stripe'
 import Cart from '#models/cart'
-import Webhooks = module
 
 const YOUR_DOMAIN = 'http://localhost:3333'
 
