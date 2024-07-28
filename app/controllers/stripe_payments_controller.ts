@@ -37,12 +37,6 @@ export default class StripePaymentsController {
     const session = await stripe.checkout.sessions.create({
       line_items: lineItems,
       mode: 'payment',
-      invoice_creation: {
-        enabled: true,
-        invoice_data: {
-          description: 'Voici ma facture.',
-        },
-      },
       success_url: `${YOUR_DOMAIN}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${YOUR_DOMAIN}/cancel`,
     })
@@ -54,7 +48,7 @@ export default class StripePaymentsController {
     const session = await stripe.checkout.sessions.retrieve(request.qs().session_id)
 
     if (session.payment_status === 'paid') {
-      await Cart.query().delete()
+      // await Cart.query().delete()
 
       return response.redirect(`${env.get('FRONT_URL')}/success`)
     } else {
@@ -70,6 +64,31 @@ export default class StripePaymentsController {
 
   cancelPayment({ response }: HttpContext) {
     return response.redirect(`${env.get('FRONT_URL')}/fail`)
+  }
+
+  webhook({ response, request }: HttpContext) {
+    const sig = request.header('stripe-signature')
+    let event
+
+    try {
+      event = stripe.webhooks.constructEvent(request.raw()!, sig!, env.get('WEBHOOK_SECRET'))
+    } catch (err) {
+      response.status(400).send(`Webhook Error: ${err.message}`)
+      return
+    }
+
+    // Handle the event
+    switch (event.type) {
+      case 'checkout.session.completed':
+        const paymentIntentSucceeded = event.data.object
+        console.log(paymentIntentSucceeded)
+
+        break
+      default:
+        console.log(`Unhandled event type ${event.type}`)
+    }
+
+    response.send({})
   }
 }
 

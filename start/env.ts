@@ -30,5 +30,6 @@ export default await Env.create(new URL('../', import.meta.url), {
   DB_DATABASE: Env.schema.string(),
 
   STRIPE_SECRET: Env.schema.string(),
+  WEBHOOK_SECRET: Env.schema.string(),
   FRONT_URL: Env.schema.string(),
 })

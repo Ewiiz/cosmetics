@@ -37,3 +37,5 @@ router.delete('cart/:id', [CartsController, 'destroy'])
 router.post('create-checkout-session', [StripePaymentsController, 'startPayment'])
 router.get('success', [StripePaymentsController, 'successPayment'])
 router.get('cancel', [StripePaymentsController, 'cancelPayment'])
+
+router.post('webhook', [StripePaymentsController, 'webhook'])
